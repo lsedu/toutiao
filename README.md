@@ -12,4 +12,4 @@
 
 4、功能列表
 
-![1563160215838](C:\Users\struggle6\AppData\Roaming\Typora\typora-user-images\1563160215838.png)
+![snipaste20190715_110924](C:\Users\struggle6\Desktop\printscreen\snipaste20190715_110924.png)
