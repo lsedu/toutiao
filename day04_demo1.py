@@ -4,8 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_script import Manager
 from flask_migrate import Migrate,MigrateCommand
 
-from day04_model import User,UserProfile,Relation
-
+from day04_model import User, UserProfile, Relation, db
 
 # 对于批量添加也可使用如下语法
 # db.session.add_all([user1, user2, user3])

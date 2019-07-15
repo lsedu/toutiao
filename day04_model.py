@@ -15,7 +15,7 @@ app = Flask(__name__)
 class Config(object):
     SQLALCHEMY_DATABASE_URI ="mysql://root:mysql@127.0.0.1/toutiao"
     SQLALCHEMY_TRACK_MODIFICATIONS =True  #
-    # SQLALCHEMY_ECHO = True #打印sql语句
+    SQLALCHEMY_ECHO = True #打印sql语句
 
 app.config.from_object(Config)
 
@@ -61,6 +61,8 @@ class User(db.Model):
     account = db.Column(db.String(20), doc='账号')
     email = db.Column(db.String(20), doc='邮箱')
     status = db.Column(db.Integer, default=1, doc='状态，是否可用')
+    #外键关联 ,额外添加属性，并非映射字段，为了关联UserProfile模型中的属性，方便查询
+    profile = db.relationship("UserProfile",uselist =False)
 
     #模型迁移时要求字段包含长度限制，varchar,string
 # sqlalchemy.exc.CompileError: (in table 'user_profile', column 'real_name'): VARCHAR requires a length on dialect mysql
@@ -75,7 +77,8 @@ class UserProfile(db.Model):
         MALE = 0
         FEMALE = 1
 
-    id = db.Column('user_id', db.Integer, primary_key=True, doc='用户ID')
+    #注意外键中的写法，引号里面的是表名.字段
+    id = db.Column('user_id', db.Integer,db.ForeignKey("user_basic.user_id"), primary_key=True, doc='用户ID')
     gender = db.Column(db.Integer, default=0, doc='性别')
     birthday = db.Column(db.Date, doc='生日')
     real_name = db.Column(db.String(20), doc='真实姓名')
