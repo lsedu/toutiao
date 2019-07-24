@@ -63,7 +63,10 @@ class User(db.Model):
     status = db.Column(db.Integer, default=1, doc='状态，是否可用')
     #外键关联 ,额外添加属性，并非映射字段，为了关联UserProfile模型中的属性，方便查询
     profile = db.relationship("UserProfile",uselist =False)
-
+    #关注信息
+    # followings = db.relationship("Relation",uselist =True)
+    # followings = db.relationship("Relation",primaryjoin = "User.id == foreign(Relation.user_id)")  #其中uselist默认为True
+    followings = db.relationship("Relation",primaryjoin = "User.id == foreign(Relation.target_user_id)")
     #模型迁移时要求字段包含长度限制，varchar,string
 # sqlalchemy.exc.CompileError: (in table 'user_profile', column 'real_name'): VARCHAR requires a length on dialect mysql
 
@@ -107,7 +110,10 @@ class Relation(db.Model):
         BLACKLIST = 2
 
     id = db.Column('relation_id', db.Integer, primary_key=True, doc='主键ID')
-    user_id = db.Column(db.Integer, doc='用户ID')
+    # user_id = db.Column(db.Integer,db.ForeignKey("user_basic.user_id"), doc='用户ID') #添加外键 ,方式一
+    user_id = db.Column(db.Integer,db.ForeignKey("user_basic.user_id"), doc='用户ID')
+    #方式二，在User模型中加入新语句,followings = db.relationship("Relation",primaryjoin = "User.id == foreign(Relation.user_id)")
+
     target_user_id = db.Column(db.Integer, doc='目标用户ID')
     relation = db.Column(db.Integer, doc='关系')
     ctime = db.Column('create_time', db.DateTime, default=datetime.now, doc='创建时间')

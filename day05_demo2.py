@@ -1,4 +1,5 @@
-#!/usr/bin/env python
+#!/root/.virtualenvs/flask_py3/bin/python
+
 from sqlalchemy import func
 from sqlalchemy.orm import load_only
 
@@ -67,9 +68,20 @@ from day04_model import User, Relation, db, UserProfile
 # FROM user_profile WHERE user_profile.user_id = %s
 
 #5.2 查询 id为1 的用户关注了哪些用户：
+# ret = User.query.filter(User.id == 1).first()  #print(ret.followings)
 
+#6,联合查询
+# 查询 id为1 的用户关注的用户名字
+# select  b.user_name from user_basic  as b inner join user_relation as r on b.user_id = r.target_user_id where r.user_id = 1;
+
+ret =User.query.join(User.followings).options(load_only(User.name)).filter(Relation.user_id ==1).all()
 
 print('ret:%s'%ret)
+# for each in ret:
+#     print(each.name)
+# print(ret.followings)
+# for each in ret.followings:
+#     print(each.name)  #AttributeError: 'Relation' object has no attribute 'name'
 # print(ret.profile.gender)
 # print(ret.profile_photo)
 # print(ret.name)

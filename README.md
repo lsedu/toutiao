@@ -11,5 +11,8 @@
 黑马头条是一款基于数据挖掘的推荐引擎产品,它为用户推荐有价值的、个性化的科技资讯,提供连接人与信息的新型服务
 
 4、功能列表
+```
 
-![snipaste20190715_110924](C:\Users\struggle6\Desktop\printscreen\snipaste20190715_110924.png)
+day05_demo2.py  ORM操作,对照sql
+
+
